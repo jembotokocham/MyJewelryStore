@@ -1,0 +1,3 @@
+# MyJewelryStore
+
+NAJPIERW PRZECZYTAJ DOKUMENTACJĘ !!!
