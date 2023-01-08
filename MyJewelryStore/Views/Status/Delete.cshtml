@@ -1,4 +1,4 @@
-﻿@model MyJewelryStore.Models.NewProduct
+﻿@model MyJewelryStore.Models.Status
 
 @{
     ViewData["Title"] = "Usuń";
@@ -6,33 +6,27 @@
 
 <h2>Usuń</h2>
 
-
+<h3>Jesteś pewny?</h3>
 <div>
-   
+    <h4>Zamówienie</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            Nazwa
+            Status
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            Cena
+            Zamówienie
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class="col-sm-2">
-            Opis
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.Order.Id)
         </dd>
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Usuń" class="btn btn-danger" /> |
         <a asp-action="Index">Wróć</a>
     </form>

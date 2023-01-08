@@ -1,0 +1,54 @@
+﻿@model IEnumerable<MyJewelryStore.Models.Status>
+
+@{
+    ViewData["Title"] = "Status";
+}
+
+<h2>Zamówienia</h2>
+
+<p>
+    <a asp-action="Create">
+        <div class="form-group">
+            <input type="submit" value="Dodaj nowy status" class="btn btn-primary" />
+        </div>
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Numer zamówienia
+            </th>
+            <th>
+                Status
+            </th>
+
+            <th>
+                Zamówiony artykuł
+            </th>
+            <th>
+                Opcje
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>@Html.DisplayFor(modelItem => item.Order.NewProductId)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

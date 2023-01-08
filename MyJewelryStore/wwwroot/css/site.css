@@ -1,18 +1,64 @@
 html {
-  font-size: 14px;
+    font-size: 80px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 20px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #c5d8ed;
+    font-family: 'Times New Roman', Times, serif;
+    color: #182038;
+    font-size: 20px;
+    
+}
+
+h1 {
+    font-size: 120px;
+    text-align: center;
+    font-family: coco;
+}
+
+h2 {
+    font-size: 100px;
+    text-align: center;
+    background-color: #4d5a8c;
+    font-family: coco;
+    color: #c5d8ed;
+}
+
+footer {
+    color: #c5d8ed;
+    background-color: #4d5a8c;
+    text-align: center;
+}
+
+@font-face {
+    font-family: 'coco';
+    src: url('coco.ttf') format('truetype');
+   
+}
+@font-face {
+    font-family: 'Samantha';
+    src: url('Samantha.ttf') format('truetype');
+}
+
+input[type=button], input[type=submit] {
+    background: #899be5;
+    font: 1.4em georgia, sans-serif;
+    border: solid thin;
+    border-color: #c5d8ed;
+    color: #182038;
+    padding: 10px 30px;
+    text-align: center;
+    font-size: 16px;
+    text-rendering: optimizeLegibility;
 }

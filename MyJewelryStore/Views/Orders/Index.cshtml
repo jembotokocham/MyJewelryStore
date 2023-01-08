@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MyJewelryStore.Models.Order>
+
+@{
+    ViewData["Title"] = "Twoje zamówienia";
+}
+
+<h2>Twoje zamówienia</h2>
+
+<p>
+    <a asp-action="Create">
+        <div class="form-group">
+            <input type="submit" value="Stwórz nowe zamówienie" class="btn btn-primary" />
+        </div>
+    </a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                Zamówiony artykuł
+            </th>
+
+            
+
+            <th>
+                Opcje
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewProductId)
+                </td>
+                
+               
+                <td>
+
+                    <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

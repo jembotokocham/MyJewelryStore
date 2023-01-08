@@ -11,5 +11,7 @@ namespace MyJewelryStore.Data
         {
         }
         public DbSet<MyJewelryStore.Models.NewProduct> NewProduct { get; set; }
+        public DbSet<MyJewelryStore.Models.Order> Order { get; set; }
+        public DbSet<MyJewelryStore.Models.Status> Status { get; set; }
     }
 }

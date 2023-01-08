@@ -12,85 +12,90 @@ using MyJewelryStore.Models;
 namespace MyJewelryStore.Controllers
 {
     [Authorize]//(Roles = "Administrator")]
-    public class NewProductsController : Controller
+    public class StatusController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public NewProductsController(ApplicationDbContext context)
+        public StatusController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: NewProducts
+        // GET: Status
         public async Task<IActionResult> Index()
         {
-              return View(await _context.NewProduct.ToListAsync());
+            var applicationDbContext = _context.Status.Include(s => s.Order);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: NewProducts/Details/5
+        // GET: Status/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.NewProduct == null)
+            if (id == null || _context.Status == null)
             {
                 return NotFound();
             }
 
-            var newProduct = await _context.NewProduct
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (newProduct == null)
+            var status = await _context.Status
+                .Include(s => s.Order)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (status == null)
             {
                 return NotFound();
             }
 
-            return View(newProduct);
+            return View(status);
         }
 
-        // GET: NewProducts/Create
+        // GET: Status/Create
         public IActionResult Create()
         {
+            ViewData["OrderId"] = new SelectList(_context.Order, "Id", "Id");
             return View();
         }
 
-        // POST: NewProducts/Create
+        // POST: Status/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Price,Description")] NewProduct newProduct)
+        public async Task<IActionResult> Create([Bind("Id,Name,OrderId")] Status status)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(newProduct);
+                _context.Add(status);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(newProduct);
+            ViewData["OrderId"] = new SelectList(_context.Order, "Id", "Id", status.OrderId);
+            return View(status);
         }
 
-        // GET: NewProducts/Edit/5
+        // GET: Status/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.NewProduct == null)
+            if (id == null || _context.Status == null)
             {
                 return NotFound();
             }
 
-            var newProduct = await _context.NewProduct.FindAsync(id);
-            if (newProduct == null)
+            var status = await _context.Status.FindAsync(id);
+            if (status == null)
             {
                 return NotFound();
             }
-            return View(newProduct);
+            ViewData["OrderId"] = new SelectList(_context.Order, "Id", "Id", status.OrderId);
+            return View(status);
         }
 
-        // POST: NewProducts/Edit/5
+        // POST: Status/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Price,Description")] NewProduct newProduct)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,OrderId")] Status status)
         {
-            if (id != newProduct.ID)
+            if (id != status.Id)
             {
                 return NotFound();
             }
@@ -99,12 +104,12 @@ namespace MyJewelryStore.Controllers
             {
                 try
                 {
-                    _context.Update(newProduct);
+                    _context.Update(status);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NewProductExists(newProduct.ID))
+                    if (!StatusExists(status.Id))
                     {
                         return NotFound();
                     }
@@ -115,49 +120,51 @@ namespace MyJewelryStore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(newProduct);
+            ViewData["OrderId"] = new SelectList(_context.Order, "Id", "Id", status.OrderId);
+            return View(status);
         }
 
-        // GET: NewProducts/Delete/5
+        // GET: Status/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.NewProduct == null)
+            if (id == null || _context.Status == null)
             {
                 return NotFound();
             }
 
-            var newProduct = await _context.NewProduct
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (newProduct == null)
+            var status = await _context.Status
+                .Include(s => s.Order)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (status == null)
             {
                 return NotFound();
             }
 
-            return View(newProduct);
+            return View(status);
         }
 
-        // POST: NewProducts/Delete/5
+        // POST: Status/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.NewProduct == null)
+            if (_context.Status == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.NewProduct'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Status'  is null.");
             }
-            var newProduct = await _context.NewProduct.FindAsync(id);
-            if (newProduct != null)
+            var status = await _context.Status.FindAsync(id);
+            if (status != null)
             {
-                _context.NewProduct.Remove(newProduct);
+                _context.Status.Remove(status);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NewProductExists(int id)
+        private bool StatusExists(int id)
         {
-          return _context.NewProduct.Any(e => e.ID == id);
+          return _context.Status.Any(e => e.Id == id);
         }
     }
 }
